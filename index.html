@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Projects</title>
+  <link rel="icon" type="image/png" href="images/logo.png" />
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fffce8;
+      color: #333;
+    }
+
+    header {
+      background-color: #556b2f;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .intro {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+    }
+
+    .project-card {
+      border: 2px solid #d2d2b0;
+      border-left: 10px solid #556b2f;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      background-color: #fffdf3;
+      transition: transform 0.2s, background-color 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .project-card:hover {
+      transform: translateY(-3px);
+      background-color: #f9f7e9;
+    }
+
+    .project-title {
+      font-size: 1.5em;
+      color: #556b2f;
+      margin-bottom: 10px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .footer a {
+      text-decoration: none;
+      color: #556b2f;
+      font-weight: bold;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>My Developer Journey</h1>
+  </header>
+
+  <div class="container">
+    <p class="intro">
+      Welcome to my personal project hub. Here I document the projects and freelance work I've done as I grow as a developer.
+    </p>
+
+    <a href="mask_picker.html" class="project-card">
+      <div class="project-title">Freelance Work for a Defense Company</div>
+      <div class="project-description">
+        A custom matrix editing tool for managing binary mask files (JSON & CSV) used in a defense-related application. Built with PyQt5 and later recreated for web.
+      </div>
+    </a>
+
+    <a href="pinas.html" class="project-card">
+      <div class="project-title">Pi-NAS Container Storage System</div>
+      <div class="project-description">
+        A custom Network Attached Storage (NAS) solution built from scratch using a Raspberry Pi 5. Configured and optimized for container storage with full system administration and networking setup.
+      </div>
+    </a>
+
+    <!-- You can add more projects here with the same structure -->
+
+    <div class="footer">
+      <a href="index.html">← Back to main homepage</a>
+    </div>
+  </div>
+
+</body>
+</html>
+

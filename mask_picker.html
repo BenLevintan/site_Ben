@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Matrix Mask Picker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f9fb;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    main {
+      padding: 20px 40px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h1, h2 {
+      color: #2c3e50;
+    }
+
+    p, li {
+      line-height: 1.6;
+    }
+
+    hr {
+      border: 0;
+      height: 1px;
+      background: #ccc;
+      margin: 20px 0;
+    }
+
+    a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .demo-section {
+      margin-top: 60px;
+    }
+
+    .grid-container {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .matrix {
+      display: grid;
+      gap: 2px;
+    }
+
+    .cell {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 3px;
+      user-select: none;
+    }
+
+    .cell[data-value="1"] {
+      background-color: #50cd50;
+      color: white;
+    }
+
+    .cell[data-value="0"] {
+      background-color: #5080cd;
+      color: white;
+    }
+
+    .cell.modified[data-value="1"] {
+      background-color: #28a745;
+    }
+
+    .cell.modified[data-value="0"] {
+      background-color: #1e5ec9;
+    }
+
+    .controls {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .controls button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 14px;
+      cursor: pointer;
+      background: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .controls button:hover {
+      background: #34495e;
+    }
+
+    .label {
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    footer {
+      margin: 40px 0 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 style="color: #28a745;">Matrix Mask Picker</h1>
+  </header>
+
+  <main>
+    <p>
+      Matrix Mask Picker is a Python application designed to toggle matrix masks on and off.<br>
+      It provides a graphical user interface (GUI) built using PyQt5, allowing users to open JSON and CSV files, load data into tables,
+      visualize and manipulate matrices, and save modified data back to CSV files.
+    </p>
+
+    <p>
+      <img src="images/github logo.png" alt="GitHub" height="20">
+      <a href="https://github.com/BenLevintan/matrix_mask_picker-public-/tree/main/matrix_mask_picker" target="_blank">
+        Link to GitHub page of this project
+      </a>
+    </p>
+
+    <hr>
+
+    <img src="images/Screenshot 2025-08-29 155451.png"
+         alt="concept design"
+         title="concept of the program"
+         height="400">
+
+    <h2>Program Description</h2>
+    <p>
+      This program is designed to help you load, view, and edit data stored in <b>JSON</b> and <b>CSV</b> files.
+      The interface is built around a large matrix display where each cell represents a binary value (0 or 1).
+    </p>
+
+    <h2>How It Works</h2>
+    <ul>
+      <li>First, you load a <b>JSON file</b> containing the data.</li>
+      <li>You then choose one of two specified vectors that hold the data.</li>
+      <li>The data is converted in the background into a <b>CSV matrix</b> and displayed on screen.</li>
+    </ul>
+
+    <h2>Matrix Display</h2>
+    <ul>
+      <li>Cells with <b>1</b> are displayed in <span style="color:green;">green</span>.</li>
+      <li>Cells with <b>0</b> are displayed in <span style="color:blue;">blue</span>.</li>
+      <li>Clicking on a cell toggles its value:
+        <ul>
+          <li>0 → 1</li>
+          <li>1 → 0</li>
+        </ul>
+      </li>
+      <li>If a cell was changed, its color becomes more <b>saturated</b> to highlight the modification.</li>
+    </ul>
+
+    <h2>Working with Two Matrices</h2>
+    <p>
+      You can also open a second CSV file. This will appear alongside the first matrix.
+      The left matrix is the <b>master</b>, and the right one is the <b>slave</b>.
+    </p>
+
+    <h2>Control Buttons</h2>
+    <p>Between the two matrices, there are 4 control buttons:</p>
+    <ol>
+      <li><b>Sync</b> – makes the right (slave) matrix identical to the left (master).</li>
+      <li><b>All Off</b> – sets all cells to 0.</li>
+      <li><b>All On</b> – sets all cells to 1.</li>
+      <li><b>Save</b> – saves the modified data (console output in this demo).</li>
+    </ol>
+
+    <h2>Summary</h2>
+    <p>
+      In short, this program lets you load binary data, visualize it as a matrix, make edits directly by clicking on cells,
+      and synchronize or save changes across multiple files with ease.
+    </p>
+
+    
+    <hr class="demo-section">
+    
+    <h2 style="text-align:center;">Interactive Matrix Demo (In-Browser)</h2>
+    
+    <div class="grid-container">
+        <div>
+            <div class="label">Master Matrix</div>
+            <div id="master" class="matrix"></div>
+        </div>
+        <div>
+            <div class="label">Slave Matrix</div>
+            <div id="slave" class="matrix"></div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button onclick="insertRandomData()">Insert Random Data</button>
+        <button onclick="allOn()">All On</button>
+        <button onclick="allOff()">All Off</button>
+        <button onclick="sync()">Sync</button>
+        <button onclick="save()">Save</button>
+    </div>
+    <br>
+    <br>
+    <p><a href="index.html">← Back to main homepage</a></p>
+</main>
+
+<footer>
+    &copy; 2025 Matrix Mask Picker | Built by Ben Levintan
+</footer>
+
+<script>
+    const ROWS = 12;
+    const COLS = 12;
+
+  let masterMatrix = createEmptyMatrix(ROWS, COLS);
+  let slaveMatrix = createEmptyMatrix(ROWS, COLS);
+  let modifiedMaster = createEmptyMatrix(ROWS, COLS);
+  let modifiedSlave = createEmptyMatrix(ROWS, COLS);
+
+  function createEmptyMatrix(rows, cols, defaultValue = 0) {
+    return Array.from({ length: rows }, () =>
+      Array.from({ length: cols }, () => defaultValue)
+    );
+  }
+
+  function renderMatrix(containerId, matrix, modifiedMatrix, editable = true) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = '';
+    container.style.gridTemplateColumns = `repeat(${matrix[0].length}, 30px)`;
+
+    matrix.forEach((row, i) => {
+      row.forEach((value, j) => {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.textContent = value;
+        cell.dataset.row = i;
+        cell.dataset.col = j;
+
+        // Set color based on value and modified state
+        if (value === 1) {
+          cell.style.backgroundColor = modifiedMatrix[i][j] ? '#32b232' : '#50cd50'; // modified/unmodified green
+        } else {
+          cell.style.backgroundColor = modifiedMatrix[i][j] ? '#3262b2' : '#5080cd'; // modified/unmodified blue
+        }
+
+        if (editable) {
+          cell.addEventListener('click', () => {
+            const newVal = value === 1 ? 0 : 1;
+            matrix[i][j] = newVal;
+            modifiedMatrix[i][j] = 1; // mark as modified
+            renderMatrix(containerId, matrix, modifiedMatrix, editable);
+          });
+        }
+
+        container.appendChild(cell);
+      });
+    });
+  }
+
+  function sync() {
+    slaveMatrix = masterMatrix.map(row => [...row]);
+    modifiedSlave = createEmptyMatrix(ROWS, COLS); // clear modifications
+    renderMatrix('slave', slaveMatrix, modifiedSlave, true);
+  }
+
+  function allOn() {
+    masterMatrix = masterMatrix.map(row => row.map(() => 1));
+    modifiedMaster = modifiedMaster.map(row => row.map(() => 1)); // all marked as modified
+    renderMatrix('master', masterMatrix, modifiedMaster, true);
+  }
+
+  function allOff() {
+    masterMatrix = masterMatrix.map(row => row.map(() => 0));
+    modifiedMaster = modifiedMaster.map(row => row.map(() => 1)); // all marked as modified
+    renderMatrix('master', masterMatrix, modifiedMaster, true);
+  }
+
+  function insertRandomData() {
+    for (let i = 0; i < ROWS; i++) {
+      for (let j = 0; j < COLS; j++) {
+        masterMatrix[i][j] = Math.random() < 0.5 ? 0 : 1;
+        modifiedMaster[i][j] = 0; // no modifications
+      }
+    }
+    renderMatrix('master', masterMatrix, modifiedMaster, true);
+  }
+
+  function save() {
+    console.log('--- SAVING SLAVE MATRIX ---');
+    console.table(slaveMatrix);
+    alert('Slave matrix printed to console.');
+  }
+
+  // Initial render
+  renderMatrix('master', masterMatrix, modifiedMaster, true);
+  renderMatrix('slave', slaveMatrix, modifiedSlave, true);
+</script>
+
+
+
+</body>
+</html>

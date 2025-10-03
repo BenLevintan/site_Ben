@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pi-NAS Container Storage System</title>
+  <link rel="icon" type="image/png" href="images/logo.png" />
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8fafc;
+      color: #333;
+    }
+
+    header {
+      background-color: #2c5530;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .intro {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+    }
+
+    .project-section {
+      border: 2px solid #e2e8f0;
+      border-left: 10px solid #2c5530;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      background-color: #ffffff;
+    }
+
+    .section-title {
+      font-size: 1.5em;
+      color: #2c5530;
+      margin-bottom: 15px;
+    }
+
+    .tech-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .tech-list li {
+      background-color: #f8fafc;
+      margin: 5px 0;
+      padding: 8px 12px;
+      border-radius: 4px;
+      border-left: 4px solid #2c5530;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .footer a {
+      text-decoration: none;
+      color: #2c5530;
+      font-weight: bold;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .highlight {
+      background-color: #f0f9ff;
+      padding: 15px;
+      border-radius: 6px;
+      border-left: 4px solid #2c5530;
+      margin: 15px 0;
+    }
+
+    .tech-logos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      margin: 15px 0;
+      justify-content: space-evenly;
+    }
+
+    .tech-logo {
+      height: 40px;
+      width: auto;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+      border-radius: 4px;
+    }
+
+    .tech-logo:hover {
+      opacity: 1;
+    }
+
+    .logo-section {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .logo-title {
+      font-size: 1.1em;
+      color: #2c5530;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Pi-NAS Container Storage System</h1>
+  </header>
+
+  <div class="container">
+    <p class="intro">
+      A custom Network Attached Storage (NAS) solution built from scratch using a Raspberry Pi 5, designed specifically for container storage and development workflows.
+    </p>
+
+    <div class="project-section">
+      <div class="section-title">Project Overview</div>
+      <p>
+        This project involved building a complete NAS solution from the ground up, starting with hardware selection and ending with a fully configured system optimized for container storage. The system serves as both a development environment and a reliable storage solution for my projects.
+      </p>
+    </div>
+
+    <div class="project-section">
+      <div class="section-title">Hardware Specifications</div>
+      <ul class="tech-list">
+        <li><strong>Main Board:</strong> <a href="https://he.aliexpress.com/item/1005007490195401.html?spm=a2g0o.order_list.order_list_main.58.6f861802s73R8B&gatewayAdapt=glo2isr" target="_blank">Raspberry Pi 5 (4GB RAM)</a></li>
+        <li><strong>Storage:</strong> <a href="https://he.aliexpress.com/item/1005008776714223.html?spm=a2g0o.order_list.order_list_main.64.6f861802s73R8B&gatewayAdapt=glo2isr" target="_blank">2TB SATA SSD (Primary)</a> + 120GB SATA SSD (Secondary)</li>
+        <li><strong>Case:</strong> <a href="https://makerworld.com/en/models/464746-raspberry-pi-5-four-bay-nas#profileId-373433" target="_blank">3D printed four-bay NAS case</a> (dark marine green)</li>
+        <li><strong>Cooling:</strong> <a href="https://he.aliexpress.com/item/1005006738849604.html?spm=a2g0o.order_list.order_list_main.46.6f861802s73R8B&gatewayAdapt=glo2isr" target="_blank">Active cooling solution</a> with temperature monitoring</li>
+        <li><strong>Network:</strong> Native Gigabit Ethernet port on Pi 5</li>
+        <li><strong>Power:</strong> <a href="https://he.aliexpress.com/item/1005006975464963.html?spm=a2g0o.order_list.order_list_main.34.6f861802s73R8B&gatewayAdapt=glo2isr" target="_blank">5.25mm barrel jack 12V/5A power supply</a></li>
+        <li><strong>SATA HAT:</strong> <a href="https://he.aliexpress.com/item/1005007245905606.html?spm=a2g0o.order_list.order_list_main.5.6f861802s73R8B&gatewayAdapt=glo2isr" target="_blank">Penta SATA HAT by RADXA</a></li>
+      </ul>
+      <div class="logo-section">
+        <div class="logo-title">Hardware Components</div>
+        <div class="tech-logos">
+          <img src="images/Raspbarr-Pi_logo.png" alt="Raspberry Pi" class="tech-logo" title="Raspberry Pi 5">
+          <img src="images/radxa_logo.png" alt="RADXA" class="tech-logo" title="RADXA SATA HAT">
+        </div>
+      </div>
+    </div>
+
+    <div class="project-section">
+      <div class="section-title">Software Configuration</div>
+      <ul class="tech-list">
+        <li><strong>OS:</strong> Debian Lite 64-bit</li>
+        <li><strong>Container Runtime:</strong> Docker with Docker Compose</li>
+        <li><strong>File System:</strong> Btrfs for snapshots and data integrity</li>
+        <li><strong>Network Services:</strong> Samba, NFS, and SSH</li>
+        <li><strong>Monitoring:</strong> Prometheus + Grafana stack</li>
+        <li><strong>Backup:</strong> Automated rsync scripts with encryption</li>
+      </ul>
+      <div class="logo-section">
+        <div class="logo-title">Core Technologies</div>
+        <div class="tech-logos">
+          <img src="images/debian_logo.png" alt="Debian" class="tech-logo" title="Debian OS">
+          <img src="images/Raspbarr-Pi_logo.png" alt="Raspberry Pi" class="tech-logo" title="Raspberry Pi 5">
+          <img src="images/Docker_Logo.png" alt="Docker" class="tech-logo" title="Docker Container Runtime">
+        </div>
+      </div>
+    </div>
+
+    <div class="project-section">
+      <div class="section-title">Running Containers</div>
+      <ul class="tech-list">
+        <li><strong>Jellyfin:</strong> Media server for streaming and organizing multimedia content</li>
+        <li><strong>Tailscale:</strong> Secure mesh VPN for remote access and networking</li>
+        <li><strong>OpenMediaVault:</strong> Web-based network attached storage (NAS) solution for easy management</li>
+      </ul>
+      <div class="logo-section">
+        <div class="logo-title">Container Services</div>
+        <div class="tech-logos">
+          <img src="images/JellyFin_Logo.png" alt="Jellyfin" class="tech-logo" title="Jellyfin Media Server">
+          <img src="images/Openmediavault_logo.png" alt="OpenMediaVault" class="tech-logo" title="OpenMediaVault NAS">
+          <img src="images/Tailscale_Logo.png" alt="Tailscale" class="tech-logo" title="Tailscale VPN">
+        </div>
+      </div>
+    </div>
+
+    <div class="project-section">
+      <div class="section-title">Key Features</div>
+      <div class="highlight">
+        <strong>Container-Optimized Storage:</strong> Configured with Docker volumes and bind mounts for seamless container data persistence.
+      </div>
+      <div class="highlight">
+        <strong>High Availability:</strong> RAID-like redundancy with automated backup and recovery procedures.
+      </div>
+      <div class="highlight">
+        <strong>Network Performance:</strong> Optimized for gigabit speeds with low-latency access to container data.
+      </div>
+      <div class="highlight">
+        <strong>Remote Management:</strong> Full SSH access with web-based monitoring and management interfaces.
+      </div>
+    </div>
+
+    <div class="project-section">
+      <div class="section-title">Completed Build</div>
+      <div style="text-align: center; margin: 20px 0;">
+        <img src="images/NAS_complete.jpg" alt="Completed Pi-NAS system" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+      </div>
+    </div>
+
+    <div class="project-section">
+      <div class="section-title">Technical Challenges</div>
+      <p>
+        The most challenging aspects included configuring the storage subsystem for optimal performance, setting up proper cooling management for sustained workloads, and implementing a robust backup strategy that wouldn't impact container performance. The system now runs 24/7 with excellent stability and performance.
+      </p>
+    </div>
+
+    <div class="footer">
+      <a href="index.html">← Back to projects</a>
+    </div>
+  </div>
+
+</body>
+</html>
