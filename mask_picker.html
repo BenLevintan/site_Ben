@@ -2,326 +2,865 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Matrix Mask Picker</title>
+  <title>Matrix Mask Picker - Interactive Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="images/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f9fb;
-      color: #333;
+    :root {
+      --primary-color: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary-color: #10b981;
+      --accent-color: #f59e0b;
+      --success-color: #22c55e;
+      --info-color: #3b82f6;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --bg-tertiary: #f1f5f9;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Dark mode variables */
+    body.dark-mode {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --border-color: #334155;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: var(--bg-primary);
+      border: 2px solid var(--border-color);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-md);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .theme-toggle i {
+      font-size: 20px;
+      color: var(--text-primary);
+    }
+
+    .back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      background: var(--bg-primary);
+      border: 2px solid var(--border-color);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-md);
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .back-button:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-lg);
+      color: var(--primary-color);
     }
 
     header {
-      background-color: #2c3e50;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
       color: white;
-      padding: 20px;
+      padding: 100px 20px 60px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 16px;
+      background: linear-gradient(45deg, #ffffff, #e2e8f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      font-weight: 300;
+      opacity: 0.9;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
     }
 
     main {
-      padding: 20px 40px;
-      max-width: 1000px;
-      margin: auto;
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
-    h1, h2 {
-      color: #2c3e50;
+    .content-section {
+      background: var(--bg-primary);
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    h2 {
+      color: var(--text-primary);
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    h2 i {
+      color: var(--primary-color);
     }
 
     p, li {
-      line-height: 1.6;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
     }
 
-    hr {
-      border: 0;
-      height: 1px;
-      background: #ccc;
+    .github-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-tertiary);
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 500;
+      transition: all 0.3s ease;
       margin: 20px 0;
     }
 
-    a {
-      color: #007BFF;
-      text-decoration: none;
+    .github-link:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
     }
 
-    a:hover {
-      text-decoration: underline;
+    .screenshot-container {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .screenshot-container img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+      transition: transform 0.3s ease;
+    }
+
+    .screenshot-container img:hover {
+      transform: scale(1.02);
     }
 
     .demo-section {
       margin-top: 60px;
+      background: var(--bg-primary);
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
+    }
+
+    .demo-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .demo-header h2 {
+      justify-content: center;
     }
 
     .grid-container {
       display: flex;
       justify-content: center;
-      gap: 40px;
-      margin-bottom: 20px;
+      gap: 60px;
+      margin-bottom: 40px;
       flex-wrap: wrap;
+    }
+
+    .matrix-container {
+      text-align: center;
     }
 
     .matrix {
       display: grid;
-      gap: 2px;
+      gap: 4px;
+      background: var(--bg-secondary);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: var(--shadow-sm);
+      border: 2px solid var(--border-color);
     }
 
     .cell {
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-weight: bold;
-      border-radius: 3px;
+      font-weight: 600;
+      border-radius: 6px;
       user-select: none;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cell::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .cell:hover::before {
+      left: 100%;
     }
 
     .cell[data-value="1"] {
-      background-color: #50cd50;
+      background: linear-gradient(135deg, var(--success-color), #16a34a);
       color: white;
+      box-shadow: 0 2px 4px rgba(34, 197, 94, 0.3);
     }
 
     .cell[data-value="0"] {
-      background-color: #5080cd;
+      background: linear-gradient(135deg, var(--info-color), #2563eb);
       color: white;
+      box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
     }
 
     .cell.modified[data-value="1"] {
-      background-color: #28a745;
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      animation: pulse 0.6s ease;
     }
 
     .cell.modified[data-value="0"] {
-      background-color: #1e5ec9;
+      background: linear-gradient(135deg, #1d4ed8, #1e40af);
+      animation: pulse 0.6s ease;
+    }
+
+    .cell:hover {
+      transform: scale(1.1);
+      z-index: 10;
+    }
+
+    .matrix-label {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+      padding: 8px 16px;
+      background: var(--bg-tertiary);
+      border-radius: 8px;
+      display: inline-block;
     }
 
     .controls {
-      margin-top: 20px;
-      text-align: center;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 30px;
     }
 
     .controls button {
-      margin: 5px;
-      padding: 10px 20px;
+      padding: 12px 24px;
       font-size: 14px;
+      font-weight: 500;
       cursor: pointer;
-      background: #2c3e50;
+      background: var(--primary-color);
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--shadow-sm);
     }
 
     .controls button:hover {
-      background: #34495e;
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
     }
 
-    .label {
-      font-weight: bold;
-      margin-bottom: 10px;
+    .controls button:active {
+      transform: translateY(0);
+    }
+
+    .controls button.secondary {
+      background: var(--secondary-color);
+    }
+
+    .controls button.secondary:hover {
+      background: #059669;
+    }
+
+    .controls button.warning {
+      background: var(--accent-color);
+    }
+
+    .controls button.warning:hover {
+      background: #d97706;
+    }
+
+    .stats-display {
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 30px;
+      border: 1px solid var(--border-color);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+    }
+
+    .stat-item {
       text-align: center;
+      padding: 16px;
+      background: var(--bg-primary);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      font-weight: 500;
     }
 
     footer {
-      margin: 40px 0 20px;
+      margin: 60px 0 20px;
       text-align: center;
+      padding: 40px 20px;
+      background: var(--bg-primary);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .footer a:hover {
+      color: var(--primary-dark);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 40px 15px;
+      }
+
+      .content-section, .demo-section {
+        padding: 24px;
+      }
+
+      .grid-container {
+        gap: 30px;
+      }
+
+      .controls {
+        gap: 12px;
+      }
+
+      .controls button {
+        padding: 10px 20px;
+        font-size: 13px;
+      }
+
+      .cell {
+        width: 28px;
+        height: 28px;
+      }
+
+      header {
+        padding: 80px 20px 40px;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Theme Toggle Button -->
+  <button class="theme-toggle" onclick="toggleTheme()">
+    <i class="fas fa-moon" id="theme-icon"></i>
+  </button>
+
+  <!-- Back Button -->
+  <a href="index.html" class="back-button">
+    <i class="fas fa-arrow-left"></i>
+  </a>
 
   <header>
-    <h1 style="color: #28a745;">Matrix Mask Picker</h1>
+    <div class="header-content">
+      <h1>Matrix Mask Picker</h1>
+      <p class="subtitle">Interactive Binary Matrix Editor</p>
+    </div>
   </header>
 
   <main>
-    <p>
-      Matrix Mask Picker is a Python application designed to toggle matrix masks on and off.<br>
-      It provides a graphical user interface (GUI) built using PyQt5, allowing users to open JSON and CSV files, load data into tables,
-      visualize and manipulate matrices, and save modified data back to CSV files.
-    </p>
+    <div class="content-section">
+      <p>
+        Matrix Mask Picker is a sophisticated Python application designed for precise manipulation of binary matrix data.
+        Built with PyQt5, it provides an intuitive graphical interface for loading, visualizing, and editing 
+        JSON and CSV files containing binary mask data used in defense and data analysis applications.
+      </p>
 
-    <p>
-      <img src="images/github logo.png" alt="GitHub" height="20">
-      <a href="https://github.com/BenLevintan/matrix_mask_picker-public-/tree/main/matrix_mask_picker" target="_blank">
-        Link to GitHub page of this project
+      <a href="https://github.com/BenLevintan/matrix_mask_picker-public-/tree/main/matrix_mask_picker" target="_blank" class="github-link">
+        <i class="fab fa-github"></i>
+        View Source Code on GitHub
       </a>
-    </p>
 
-    <hr>
-
-    <img src="images/Screenshot 2025-08-29 155451.png"
-         alt="concept design"
-         title="concept of the program"
-         height="400">
-
-    <h2>Program Description</h2>
-    <p>
-      This program is designed to help you load, view, and edit data stored in <b>JSON</b> and <b>CSV</b> files.
-      The interface is built around a large matrix display where each cell represents a binary value (0 or 1).
-    </p>
-
-    <h2>How It Works</h2>
-    <ul>
-      <li>First, you load a <b>JSON file</b> containing the data.</li>
-      <li>You then choose one of two specified vectors that hold the data.</li>
-      <li>The data is converted in the background into a <b>CSV matrix</b> and displayed on screen.</li>
-    </ul>
-
-    <h2>Matrix Display</h2>
-    <ul>
-      <li>Cells with <b>1</b> are displayed in <span style="color:green;">green</span>.</li>
-      <li>Cells with <b>0</b> are displayed in <span style="color:blue;">blue</span>.</li>
-      <li>Clicking on a cell toggles its value:
-        <ul>
-          <li>0 → 1</li>
-          <li>1 → 0</li>
-        </ul>
-      </li>
-      <li>If a cell was changed, its color becomes more <b>saturated</b> to highlight the modification.</li>
-    </ul>
-
-    <h2>Working with Two Matrices</h2>
-    <p>
-      You can also open a second CSV file. This will appear alongside the first matrix.
-      The left matrix is the <b>master</b>, and the right one is the <b>slave</b>.
-    </p>
-
-    <h2>Control Buttons</h2>
-    <p>Between the two matrices, there are 4 control buttons:</p>
-    <ol>
-      <li><b>Sync</b> – makes the right (slave) matrix identical to the left (master).</li>
-      <li><b>All Off</b> – sets all cells to 0.</li>
-      <li><b>All On</b> – sets all cells to 1.</li>
-      <li><b>Save</b> – saves the modified data (console output in this demo).</li>
-    </ol>
-
-    <h2>Summary</h2>
-    <p>
-      In short, this program lets you load binary data, visualize it as a matrix, make edits directly by clicking on cells,
-      and synchronize or save changes across multiple files with ease.
-    </p>
-
-    
-    <hr class="demo-section">
-    
-    <h2 style="text-align:center;">Interactive Matrix Demo (In-Browser)</h2>
-    
-    <div class="grid-container">
-        <div>
-            <div class="label">Master Matrix</div>
-            <div id="master" class="matrix"></div>
-        </div>
-        <div>
-            <div class="label">Slave Matrix</div>
-            <div id="slave" class="matrix"></div>
-        </div>
+      <div class="screenshot-container">
+        <img src="images/Screenshot 2025-08-29 155451.png"
+             alt="Matrix Mask Picker Interface"
+             title="PyQt5 GUI Interface">
+      </div>
     </div>
-    
-    <div class="controls">
-        <button onclick="insertRandomData()">Insert Random Data</button>
-        <button onclick="allOn()">All On</button>
-        <button onclick="allOff()">All Off</button>
-        <button onclick="sync()">Sync</button>
-        <button onclick="save()">Save</button>
-    </div>
-    <br>
-    <br>
-    <p><a href="index.html">← Back to main homepage</a></p>
-</main>
 
-<footer>
-    &copy; 2025 Matrix Mask Picker | Built by Ben Levintan
-</footer>
+    <div class="content-section">
+      <h2><i class="fas fa-info-circle"></i> Program Description</h2>
+      <p>
+        This application is specifically designed to help you load, view, and edit data stored in <strong>JSON</strong> and <strong>CSV</strong> files.
+        The interface centers around an intuitive matrix display where each cell represents a binary value (0 or 1),
+        making it perfect for working with mask data, configuration matrices, and binary datasets.
+      </p>
+    </div>
+
+    <div class="content-section">
+      <h2><i class="fas fa-cogs"></i> How It Works</h2>
+      <ul>
+        <li><strong>Data Loading:</strong> Import JSON files containing structured binary data</li>
+        <li><strong>Vector Selection:</strong> Choose from two specified data vectors within the JSON structure</li>
+        <li><strong>Matrix Conversion:</strong> Automatically convert data into a visual CSV matrix format</li>
+        <li><strong>Real-time Editing:</strong> Make live modifications with instant visual feedback</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2><i class="fas fa-th"></i> Matrix Visualization</h2>
+      <ul>
+        <li><strong>Binary States:</strong> Cells with value <strong>1</strong> are displayed in <span style="color: var(--success-color); font-weight: 600;">green</span></li>
+        <li><strong>Zero States:</strong> Cells with value <strong>0</strong> are displayed in <span style="color: var(--info-color); font-weight: 600;">blue</span></li>
+        <li><strong>Interactive Editing:</strong> Click any cell to toggle its value (0 ↔ 1)</li>
+        <li><strong>Change Tracking:</strong> Modified cells show enhanced saturation to highlight recent changes</li>
+        <li><strong>Visual Feedback:</strong> Smooth animations and hover effects for better user experience</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2><i class="fas fa-layer-group"></i> Dual Matrix System</h2>
+      <p>
+        The application supports working with two matrices simultaneously for advanced data management:
+      </p>
+      <ul>
+        <li><strong>Master Matrix:</strong> Primary data source (left panel)</li>
+        <li><strong>Slave Matrix:</strong> Secondary data for comparison or backup (right panel)</li>
+        <li><strong>Synchronization:</strong> Real-time sync capabilities between matrices</li>
+        <li><strong>Independent Editing:</strong> Modify each matrix independently or together</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2><i class="fas fa-sliders-h"></i> Control Functions</h2>
+      <p>Advanced control buttons provide efficient matrix manipulation:</p>
+      <ol>
+        <li><strong><i class="fas fa-sync"></i> Sync:</strong> Makes the slave matrix identical to the master</li>
+        <li><strong><i class="fas fa-times"></i> All Off:</strong> Sets all cells to 0 across the matrix</li>
+        <li><strong><i class="fas fa-check"></i> All On:</strong> Sets all cells to 1 across the matrix</li>
+        <li><strong><i class="fas fa-save"></i> Save:</strong> Exports modified data (console output in demo)</li>
+        <li><strong><i class="fas fa-dice"></i> Random Data:</strong> Generates random binary patterns for testing</li>
+      </ol>
+    </div>
+
+    <div class="demo-section">
+      <div class="demo-header">
+        <h2><i class="fas fa-play-circle"></i> Interactive Live Demo</h2>
+        <p>Try the matrix editor below - click cells to toggle values, use controls to manipulate data, and see real-time changes!</p>
+      </div>
+      
+      <div class="grid-container">
+        <div class="matrix-container">
+          <div class="matrix-label">
+            <i class="fas fa-crown"></i> Master Matrix
+          </div>
+          <div id="master" class="matrix"></div>
+        </div>
+        <div class="matrix-container">
+          <div class="matrix-label">
+            <i class="fas fa-copy"></i> Slave Matrix
+          </div>
+          <div id="slave" class="matrix"></div>
+        </div>
+      </div>
+      
+      <div class="controls">
+        <button onclick="insertRandomData()" class="secondary">
+          <i class="fas fa-dice"></i> Random Data
+        </button>
+        <button onclick="allOn()" class="secondary">
+          <i class="fas fa-check"></i> All On
+        </button>
+        <button onclick="allOff()" class="warning">
+          <i class="fas fa-times"></i> All Off
+        </button>
+        <button onclick="sync()">
+          <i class="fas fa-sync"></i> Sync
+        </button>
+        <button onclick="save()" class="secondary">
+          <i class="fas fa-save"></i> Save
+        </button>
+      </div>
+
+      <div class="stats-display">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-number" id="total-cells">144</div>
+            <div class="stat-label">Total Cells</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" id="active-cells">0</div>
+            <div class="stat-label">Active (1)</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" id="modified-cells">0</div>
+            <div class="stat-label">Modified</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" id="sync-status">No</div>
+            <div class="stat-label">Synced</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Matrix Mask Picker | Built by Ben Levintan with precision and attention to detail</p>
+    <p><a href="index.html"><i class="fas fa-home"></i> Back to Portfolio</a></p>
+  </footer>
 
 <script>
+    // Theme Toggle Functionality
+    function toggleTheme() {
+      const body = document.body;
+      const themeIcon = document.getElementById('theme-icon');
+      
+      body.classList.toggle('dark-mode');
+      
+      if (body.classList.contains('dark-mode')) {
+        themeIcon.className = 'fas fa-sun';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        themeIcon.className = 'fas fa-moon';
+        localStorage.setItem('theme', 'light');
+      }
+      
+      // Update matrix colors for dark mode
+      updateMatrixColors();
+    }
+
+    // Load saved theme
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme');
+      const themeIcon = document.getElementById('theme-icon');
+      
+      if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeIcon.className = 'fas fa-sun';
+      }
+
+      // Initialize matrix demo
+      initializeMatrixDemo();
+    });
+
+    // Matrix Demo Variables
     const ROWS = 12;
     const COLS = 12;
+    let masterMatrix = createEmptyMatrix(ROWS, COLS);
+    let slaveMatrix = createEmptyMatrix(ROWS, COLS);
+    let modifiedMaster = createEmptyMatrix(ROWS, COLS);
+    let modifiedSlave = createEmptyMatrix(ROWS, COLS);
 
-  let masterMatrix = createEmptyMatrix(ROWS, COLS);
-  let slaveMatrix = createEmptyMatrix(ROWS, COLS);
-  let modifiedMaster = createEmptyMatrix(ROWS, COLS);
-  let modifiedSlave = createEmptyMatrix(ROWS, COLS);
+    function createEmptyMatrix(rows, cols, defaultValue = 0) {
+      return Array.from({ length: rows }, () =>
+        Array.from({ length: cols }, () => defaultValue)
+      );
+    }
 
-  function createEmptyMatrix(rows, cols, defaultValue = 0) {
-    return Array.from({ length: rows }, () =>
-      Array.from({ length: cols }, () => defaultValue)
-    );
-  }
-
-  function renderMatrix(containerId, matrix, modifiedMatrix, editable = true) {
-    const container = document.getElementById(containerId);
-    container.innerHTML = '';
-    container.style.gridTemplateColumns = `repeat(${matrix[0].length}, 30px)`;
-
-    matrix.forEach((row, i) => {
-      row.forEach((value, j) => {
-        const cell = document.createElement('div');
-        cell.className = 'cell';
-        cell.textContent = value;
-        cell.dataset.row = i;
-        cell.dataset.col = j;
-
-        // Set color based on value and modified state
+    function updateMatrixColors() {
+      // Update cell colors based on current theme
+      const cells = document.querySelectorAll('.cell');
+      cells.forEach(cell => {
+        const value = parseInt(cell.textContent);
+        const isModified = cell.classList.contains('modified');
+        
         if (value === 1) {
-          cell.style.backgroundColor = modifiedMatrix[i][j] ? '#32b232' : '#50cd50'; // modified/unmodified green
+          if (isModified) {
+            cell.style.background = 'linear-gradient(135deg, #16a34a, #15803d)';
+          } else {
+            cell.style.background = 'linear-gradient(135deg, var(--success-color), #16a34a)';
+          }
         } else {
-          cell.style.backgroundColor = modifiedMatrix[i][j] ? '#3262b2' : '#5080cd'; // modified/unmodified blue
+          if (isModified) {
+            cell.style.background = 'linear-gradient(135deg, #1d4ed8, #1e40af)';
+          } else {
+            cell.style.background = 'linear-gradient(135deg, var(--info-color), #2563eb)';
+          }
         }
-
-        if (editable) {
-          cell.addEventListener('click', () => {
-            const newVal = value === 1 ? 0 : 1;
-            matrix[i][j] = newVal;
-            modifiedMatrix[i][j] = 1; // mark as modified
-            renderMatrix(containerId, matrix, modifiedMatrix, editable);
-          });
-        }
-
-        container.appendChild(cell);
       });
-    });
-  }
+    }
 
-  function sync() {
-    slaveMatrix = masterMatrix.map(row => [...row]);
-    modifiedSlave = createEmptyMatrix(ROWS, COLS); // clear modifications
-    renderMatrix('slave', slaveMatrix, modifiedSlave, true);
-  }
+    function renderMatrix(containerId, matrix, modifiedMatrix, editable = true) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      container.style.gridTemplateColumns = `repeat(${matrix[0].length}, 32px)`;
 
-  function allOn() {
-    masterMatrix = masterMatrix.map(row => row.map(() => 1));
-    modifiedMaster = modifiedMaster.map(row => row.map(() => 1)); // all marked as modified
-    renderMatrix('master', masterMatrix, modifiedMaster, true);
-  }
+      matrix.forEach((row, i) => {
+        row.forEach((value, j) => {
+          const cell = document.createElement('div');
+          cell.className = 'cell';
+          cell.textContent = value;
+          cell.dataset.row = i;
+          cell.dataset.col = j;
 
-  function allOff() {
-    masterMatrix = masterMatrix.map(row => row.map(() => 0));
-    modifiedMaster = modifiedMaster.map(row => row.map(() => 1)); // all marked as modified
-    renderMatrix('master', masterMatrix, modifiedMaster, true);
-  }
+          // Set color based on value and modified state
+          if (value === 1) {
+            if (modifiedMatrix[i][j]) {
+              cell.style.background = 'linear-gradient(135deg, #16a34a, #15803d)';
+              cell.classList.add('modified');
+            } else {
+              cell.style.background = 'linear-gradient(135deg, var(--success-color), #16a34a)';
+            }
+          } else {
+            if (modifiedMatrix[i][j]) {
+              cell.style.background = 'linear-gradient(135deg, #1d4ed8, #1e40af)';
+              cell.classList.add('modified');
+            } else {
+              cell.style.background = 'linear-gradient(135deg, var(--info-color), #2563eb)';
+            }
+          }
 
-  function insertRandomData() {
-    for (let i = 0; i < ROWS; i++) {
-      for (let j = 0; j < COLS; j++) {
-        masterMatrix[i][j] = Math.random() < 0.5 ? 0 : 1;
-        modifiedMaster[i][j] = 0; // no modifications
+          if (editable) {
+            cell.addEventListener('click', () => {
+              const newVal = value === 1 ? 0 : 1;
+              matrix[i][j] = newVal;
+              modifiedMatrix[i][j] = 1; // mark as modified
+              renderMatrix(containerId, matrix, modifiedMatrix, editable);
+              updateStats();
+            });
+          }
+
+          container.appendChild(cell);
+        });
+      });
+    }
+
+    function sync() {
+      slaveMatrix = masterMatrix.map(row => [...row]);
+      modifiedSlave = createEmptyMatrix(ROWS, COLS); // clear modifications
+      renderMatrix('slave', slaveMatrix, modifiedSlave, true);
+      updateStats();
+      
+      // Show sync feedback
+      document.getElementById('sync-status').textContent = 'Yes';
+      document.getElementById('sync-status').style.color = 'var(--success-color)';
+    }
+
+    function allOn() {
+      masterMatrix = masterMatrix.map(row => row.map(() => 1));
+      modifiedMaster = modifiedMaster.map(row => row.map(() => 1)); // all marked as modified
+      renderMatrix('master', masterMatrix, modifiedMaster, true);
+      updateStats();
+    }
+
+    function allOff() {
+      masterMatrix = masterMatrix.map(row => row.map(() => 0));
+      modifiedMaster = modifiedMaster.map(row => row.map(() => 1)); // all marked as modified
+      renderMatrix('master', masterMatrix, modifiedMaster, true);
+      updateStats();
+    }
+
+    function insertRandomData() {
+      for (let i = 0; i < ROWS; i++) {
+        for (let j = 0; j < COLS; j++) {
+          masterMatrix[i][j] = Math.random() < 0.5 ? 0 : 1;
+          modifiedMaster[i][j] = 0; // no modifications
+        }
+      }
+      renderMatrix('master', masterMatrix, modifiedMaster, true);
+      updateStats();
+    }
+
+    function save() {
+      console.log('--- SAVING SLAVE MATRIX ---');
+      console.table(slaveMatrix);
+      
+      // Create a more sophisticated save feedback
+      const saveButton = event.target;
+      const originalText = saveButton.innerHTML;
+      saveButton.innerHTML = '<i class="fas fa-check"></i> Saved!';
+      saveButton.style.background = 'var(--success-color)';
+      
+      setTimeout(() => {
+        saveButton.innerHTML = originalText;
+        saveButton.style.background = '';
+      }, 2000);
+    }
+
+    function updateStats() {
+      // Count active cells in master matrix
+      const activeCells = masterMatrix.flat().reduce((count, cell) => count + cell, 0);
+      document.getElementById('active-cells').textContent = activeCells;
+      
+      // Count modified cells
+      const modifiedCells = modifiedMaster.flat().reduce((count, cell) => count + cell, 0);
+      document.getElementById('modified-cells').textContent = modifiedCells;
+      
+      // Check if matrices are synced
+      const isSynced = JSON.stringify(masterMatrix) === JSON.stringify(slaveMatrix);
+      const syncElement = document.getElementById('sync-status');
+      if (isSynced) {
+        syncElement.textContent = 'Yes';
+        syncElement.style.color = 'var(--success-color)';
+      } else {
+        syncElement.textContent = 'No';
+        syncElement.style.color = 'var(--text-secondary)';
       }
     }
-    renderMatrix('master', masterMatrix, modifiedMaster, true);
-  }
 
-  function save() {
-    console.log('--- SAVING SLAVE MATRIX ---');
-    console.table(slaveMatrix);
-    alert('Slave matrix printed to console.');
-  }
+    function initializeMatrixDemo() {
+      // Initial render
+      renderMatrix('master', masterMatrix, modifiedMaster, true);
+      renderMatrix('slave', slaveMatrix, modifiedSlave, true);
+      updateStats();
+      
+      // Add scroll animations
+      const animatedElements = document.querySelectorAll('.content-section, .demo-section');
+      const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, { threshold: 0.1 });
 
-  // Initial render
-  renderMatrix('master', masterMatrix, modifiedMaster, true);
-  renderMatrix('slave', slaveMatrix, modifiedSlave, true);
+      animatedElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        scrollObserver.observe(el);
+      });
+    }
 </script>
 
 
