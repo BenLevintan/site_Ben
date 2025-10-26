@@ -427,13 +427,32 @@
           <span class="tech-tag">Networking</span>
         </div>
       </a>
+
+      <a href="cloud-integrity-monitor.html" class="project-card" style="--delay: 2">
+        <div class="project-icon">
+          <i class="fas fa-cloud"></i>
+        </div>
+        <div class="project-title">Cloud & Local Data Integrity Monitor</div>
+        <div class="project-description">
+          Python-based automation solution ensuring data integrity and synchronization between Google Sheets 
+          and local file systems. Developed during a student position at Ludan Group with automated 
+          comparison and reporting capabilities.
+        </div>
+        <div class="tech-stack">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">Google Sheets API</span>
+          <span class="tech-tag">OAuth 2.0</span>
+          <span class="tech-tag">Automation</span>
+          <span class="tech-tag">Data Integrity</span>
+        </div>
+      </a>
     </div>
 
     <div class="stats-section">
       <h2 style="color: var(--text-primary); margin-bottom: 20px;">Project Highlights</h2>
       <div class="stats-grid">
         <div class="stat-item">
-          <div class="stat-number" data-count="2">0</div>
+          <div class="stat-number" data-count="3">0</div>
           <div class="stat-label">Completed Projects</div>
         </div>
         <div class="stat-item">
@@ -484,6 +503,10 @@
       if (savedTheme === 'dark') {
         document.body.classList.add('dark-mode');
         themeIcon.className = 'fas fa-sun';
+      } else {
+        // Ensure light mode is set
+        document.body.classList.remove('dark-mode');
+        themeIcon.className = 'fas fa-moon';
       }
 
       // Animate counters
