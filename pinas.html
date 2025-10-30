@@ -11,7 +11,8 @@
     :root {
       --primary-color: #2563eb;
       --primary-dark: #1d4ed8;
-      --secondary-color: #10b981;
+      --secondary-color: #059669;
+      --secondary-light: #10b981;
       --accent-color: #f59e0b;
       --success-color: #22c55e;
       --info-color: #3b82f6;
@@ -19,7 +20,7 @@
       --bg-secondary: #f8fafc;
       --bg-tertiary: #f1f5f9;
       --text-primary: #1e293b;
-      --text-secondary: #c3eb8e;
+      --text-secondary: #64748b;
       --border-color: #e2e8f0;
       --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
       --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -106,7 +107,7 @@
     }
 
     header {
-      background: linear-gradient(135deg, var(--secondary-color) 0%, #059669 100%);
+      background: linear-gradient(135deg, var(--secondary-light) 0%, var(--secondary-color) 100%);
       color: white;
       padding: 100px 20px 60px;
       text-align: center;
@@ -829,6 +830,9 @@
       if (savedTheme === 'dark') {
         document.body.classList.add('dark-mode');
         themeIcon.className = 'fas fa-sun';
+      } else {
+        document.body.classList.remove('dark-mode');
+        themeIcon.className = 'fas fa-moon';
       }
 
       // Add scroll animations
