@@ -1,3 +1,24 @@
+# 💻 Ben Levintan — Developer Portfolio
+
+**Live Site:** [https://benlevintan.github.io/site_Ben/index.html](https://benlevintan.github.io/site_Ben/index.html)
+
+A personal showcase of my software and hardware projects — from Python automation tools to full hardware builds.  
+This portfolio is a continuously evolving space that reflects my growth as a developer, systems engineer, and problem solver.
+
+---
+
+## 🌐 Overview
+
+This project is a **static portfolio website** built entirely with **HTML, CSS, and JavaScript** — no frameworks, no build step.  
+Each page highlights a unique project, with interactive visuals and dark-mode support.
+
+### ✨ Features
+
+- 🌙 Dark / Light Theme Toggle  
+- 🎨 Responsive design with animated UI elements  
+- 📂 Independent sub-pages for each project  
+- 🔗 Links to GitHub repos and technical write-ups  
+- 🧩 Live interactive demos (where applicable)
 
 ---
 
