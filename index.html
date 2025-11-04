@@ -447,28 +447,6 @@
         </div>
       </a>
     </div>
-
-    <div class="stats-section">
-      <h2 style="color: var(--text-primary); margin-bottom: 20px;">Project Highlights</h2>
-      <div class="stats-grid">
-        <div class="stat-item">
-          <div class="stat-number" data-count="3">0</div>
-          <div class="stat-label">Completed Projects</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number" data-count="10">0</div>
-          <div class="stat-label">Technologies Used</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number" data-count="100">0</div>
-          <div class="stat-label">Hours of Development</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number" data-count="24">0</div>
-          <div class="stat-label">System Uptime (hrs)</div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <div class="footer">
@@ -509,36 +487,8 @@
         themeIcon.className = 'fas fa-moon';
       }
 
-      // Animate counters
-      const counters = document.querySelectorAll('.stat-number');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const counter = entry.target;
-            const target = parseInt(counter.dataset.count);
-            let current = 0;
-            const increment = target / 100;
-            
-            const timer = setInterval(() => {
-              current += increment;
-              if (current >= target) {
-                current = target;
-                clearInterval(timer);
-              }
-              counter.textContent = Math.floor(current);
-            }, 20);
-            
-            observer.unobserve(counter);
-          }
-        });
-      });
-
-      counters.forEach(counter => {
-        observer.observe(counter);
-      });
-
       // Add scroll animations
-      const animatedElements = document.querySelectorAll('.project-card, .stats-section');
+      const animatedElements = document.querySelectorAll('.project-card');
       const scrollObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
